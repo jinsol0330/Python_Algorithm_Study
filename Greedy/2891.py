@@ -49,5 +49,4 @@ for k in range(len(list1)):
                 continue
     else:
         continue
-
 print(list1.count(0))

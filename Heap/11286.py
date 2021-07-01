@@ -21,7 +21,6 @@ for i in range(n):
             # 기본적으로 heapq 모듈은 최소힙 기능으로 동작
             # [0] = 절대값, [1] = 실제 데이터
             print(heapq.heappop(heap)[1])
-        # heap이 비어있다면 0을 출력
         else:
             print(0)
     # 0이 아니면 heap에 데이터 추가

@@ -20,7 +20,6 @@ for i in range(test_case):
     if n >= 6:
         for j in range(5, n):
             res_list.append(res_list[j-1]+res_list[j-5])    
-    
     print(res_list[n-1])
     
 

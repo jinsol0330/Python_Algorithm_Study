@@ -12,6 +12,7 @@ n = int(input())
 list_t = []
 list_p = []
 price = 0
+
 # 값을 저장해 놓을 테이블 리스트 생성 
 dp_table = [0] * n+1
 

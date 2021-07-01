@@ -33,6 +33,7 @@ for i in range(testcase):
                 # 인쇄
                 del p[0]
                 del target[0]
+                
         # 우선순위가 가장 크지 않다면
         else:
             # 그 값을 리스트 가장 뒤로 재배치
