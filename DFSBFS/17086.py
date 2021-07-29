@@ -18,10 +18,7 @@ for i in range(n):
     space.append(list(map(int, input().split())))
 
 case = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]]
-'''
-10의 9제곱
-최단 경로 알고리즘에서 도달할 수 없는 노드에 대한 최단 거리
-'''
+
 INF = 1e9
 visited = [[INF for _ in range(m)]for _ in range(n)]
 
@@ -32,7 +29,7 @@ for i in range(n):
             # 큐에 x,y좌표 이동한 위치의 정보를 넣음
             q.append([i,j,1])
             # 상어의 현재 위치는 안전거리를 굳이 구하지 않아도 되므로 0으로 표시
-            # 이 좌표가 곧 거리가 됨
+            # 이 좌표가 곧 거리가 됨(d값이 들어가므로)
             visited[i][j] = 0
             while q:
                 x, y, d = q.popleft() 
@@ -41,10 +38,10 @@ for i in range(n):
                     newy = y + case[c][1]
                     # 범위 확인
                     if 0<=newx<n and 0<=newy<m:
-                        # 상어가 있는 자리인지, 이전에 방문했는지 확인
                         if space[newx][newy] == 0 and visited[newx][newy] > d:
                             # 앞으로 탐색할 x,y좌표와 거리정보(이전보다 한 칸 +)를 큐에 저장
                             q.append([newx,newy,d+1])
+                            # 거리정보 d저장
                             visited[newx][newy] = d
             # print(visited)
 max_distance = 0
