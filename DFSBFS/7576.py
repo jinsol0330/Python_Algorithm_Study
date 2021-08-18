@@ -19,12 +19,12 @@ def find():
     while q:
         x, y = q.popleft()
         for i in range(4):
-            newx, newy = x + case[i][0], y + case[i][1]            
-            if 0 <= newx < n and 0 <= newy < m:
-                # 익지 않은 토마토라면
-                if graph[newx][newy] == 0:
-                    graph[newx][newy] = graph[x][y]+1
-                    q.append([newx, newy])
+            newx, newy = x + case[i][0], y + case[i][1]    
+            # 범위 확인        
+            if 0 <= newx < n and 0 <= newy < m and graph[newx][newy] == 0:
+                # 일수 저장(1부터 시작)
+                graph[newx][newy] = graph[x][y]+1
+                q.append([newx, newy])
 
 m, n = map(int, stdin.readline().split())
 graph = [list(map(int, stdin.readline().split())) for _ in range(n)]
@@ -35,13 +35,17 @@ for i in range(n):
         # 익은 토마토가 있는 위치를 모두 큐에 먼저 넣음
         if graph[i][j] == 1:
             q.append([i,j])
+
+# 익은 토마토 기준으로 탐색 시작
 find()
-tmp = 0
+
+res = 0
 for i in range(n):
     for j in range(m):
-        tmp = max(tmp,graph[i][j])
+        # 토마토가 모두 익지 못하는 상황일 때
         if graph[i][j] == 0:
             print(-1)
             exit()
-        res = max(tmp,1)
+        res = max(res, graph[i][j])
+# 1부터 시작했으므로 -1
 print(res-1)
