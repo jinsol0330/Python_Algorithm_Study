@@ -1,7 +1,6 @@
 '''
 메뉴 리뉴얼
 '''
-
 from itertools import combinations
 
 def solution(orders, course):
@@ -36,7 +35,7 @@ def solution(orders, course):
             elif max_res == menu_cnt:
                 tmp.append(menu)
         answer += tmp
-        
+
     # 오름차순 정렬
     answer.sort()
     return answer
