@@ -30,12 +30,9 @@ for s in students:
             del pic[i]
             del pic_num[i]
 
-        # 새로추가
         pic.append(s)
-        # 새로운 학생의 추천수(1부터)
         pic_num.append(1)
 
-# 오름차순 정리
 pic.sort()
 for i in pic:
-    print(i, end = ' ')
+    print(i, end=' ')
