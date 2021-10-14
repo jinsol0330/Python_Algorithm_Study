@@ -1,5 +1,5 @@
 '''
-N과 M
+N과 M(3)
 '''
 
 from sys import stdin
