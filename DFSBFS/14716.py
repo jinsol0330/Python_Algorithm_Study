@@ -11,29 +11,31 @@ ANT가 처음 알고리즘 대회를 개최하게 되면서 현수막을 내걸�
 from sys import stdin
 from collections import deque
 
-m, n = list(map(int, stdin.readline().split()))
-graph = [list(map(int, stdin.readline().split())) for _ in range(m)]
-
-case = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]]
 
 def find(i, j, visited):
+    case = [[-1, 0], [1, 0], [0, -1], [0, 1], [-1, -1], \
+        [-1, 1], [1, -1], [1, 1]]
     q = deque()
-    q.append([i,j])
+    q.append([i, j])
     visited[i][j] = 1
     while q:
         x, y = q.popleft()
         for i in range(8):
-            newx, newy = x + case[i][0], y + case[i][1]            
-            if 0 <= newx < m and 0 <= newy < n:
-                if graph[newx][newy] and not visited[newx][newy]:
+            newx, newy = x + case[i][0], y + case[i][1]
+            if 0 <= newx < M and 0 <= newy < N:
+                if board[newx][newy] and not visited[newx][newy]:
                     visited[newx][newy] = 1
                     q.append([newx, newy])
 
+
+M, N = list(map(int, stdin.readline().split()))
+board = [list(map(int, stdin.readline().split())) for _ in range(M)]
+
 res = 0
-visited = [[0] * n for _ in range(m)]
-for i in range(m):
-    for j in range(n):
-        if not visited[i][j] and graph[i][j]:
+visited = [[0] * N for _ in range(M)]
+for i in range(M):
+    for j in range(N):
+        if not visited[i][j] and board[i][j]:
             find(i, j, visited)
             res += 1
 
