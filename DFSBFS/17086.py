@@ -10,44 +10,44 @@ N×M 크기의 공간에 아기 상어 여러 마리가 있다.
 안전 거리가 가장 큰 칸을 구해보자. 
 '''
 
+from sys import stdin
 from collections import deque
 
-n, m = map(int, input().split())
-space = []
-for i in range(n):
-    space.append(list(map(int, input().split())))
+N, M = map(int, stdin.readline().split())
+board = [list(map(int, stdin.readline().split())) for _ in range(N)]
 
 case = [[-1,0], [1,0], [0,-1], [0,1], [-1,-1], [-1,1], [1,-1], [1,1]]
 
 INF = 1e9
-visited = [[INF for _ in range(m)]for _ in range(n)]
+visited = [[INF for _ in range(M)]for _ in range(N)]
 
-for i in range(n):
-    for j in range(m):
-        if space[i][j] == 1:
+for row in range(N):
+    for col in range(M):
+        if board[row][col] == 1:
             q = deque()
             # 큐에 x,y좌표 이동한 위치의 정보를 넣음
-            q.append([i,j,1])
+            q.append([row, col, 1])
             # 상어의 현재 위치는 안전거리를 굳이 구하지 않아도 되므로 0으로 표시
-            # 이 좌표가 곧 거리가 됨(d값이 들어가므로)
-            visited[i][j] = 0
+            # 이 좌표가 곧 거리가 됨 (d값이 들어가므로)
+            visited[row][col] = 0
             while q:
                 x, y, d = q.popleft() 
                 for c in range(8):
                     newx = x + case[c][0]
                     newy = y + case[c][1]
                     # 범위 확인
-                    if 0<=newx<n and 0<=newy<m:
-                        if space[newx][newy] == 0 and visited[newx][newy] > d:
+                    if 0 <= newx < N and 0 <= newy < M:
+                        if board[newx][newy] == 0 and visited[newx][newy] > d:
                             # 앞으로 탐색할 x,y좌표와 거리정보(이전보다 한 칸 +)를 큐에 저장
-                            q.append([newx,newy,d+1])
-                            # 거리정보 d저장
+                            q.append([newx, newy, d + 1])
+                            # 거리정보 d 저장
                             visited[newx][newy] = d
             # print(visited)
+            
 max_distance = 0
-for i in range(n):
-    for j in range(m):
-        if visited[i][j] >= max_distance:
-            max_distance = visited[i][j]
+for row in range(N):
+    for col in range(M):
+        if visited[row][col] >= max_distance:
+            max_distance = visited[row][col]
 print(max_distance)
 
