@@ -4,53 +4,42 @@
 
 from sys import stdin
 
-N, M = map(int, stdin.readline().split())
-r, c, d = map(int, stdin.readline().split())
-board = [list(stdin.readline().split()) for _ in range(N)]
-
-# 현재 위치는 청소할 필요가 없으므로
-board[r][c] = 2
-
-# 0:북   1:동   2:남   3:서
-directions = [[-1, 0], [0, 1], [1, 0], [0, -1]]
-
 
 def find(r, c, d):
-    cnt = 1
-    while True:
-        flag = False
-        '''
-        2번 
-        -> 현재 위치에서 현재 방향을 기준으로 왼쪽부터 차례대로 탐색
-        '''
-        for _ in range(4):
-            # 왼쪽으로 회전
-            d = (d + 3) % 4
-            newr, newc = r + directions[d][0], c + directions[d][1]
-            
-            # 범위 확인 후 청소가 되어있지 않다면 1번으로 감
-            if 0 <= newr < N and 0 <= newc < M and board[newr][newc] == 0:
-                '''
-                1번 
-                -> 청소를 하고 결과값 +1
-                '''
-                board[newr][newc] = 2
-                cnt += 1
-                r, c = newr, newc
-                flag = True
-                break
-                
-        # 네 방향 모두 청소가 이미 되어있거나 벽인 경우
-        if not flag:
-            backr, backc = r - directions[d][0], c - directions[d][1]
-            if 0 <= backr < N and 0 <= backc < M:
-                # 후진했을 때에도 벽인 경우는 작동을 멈춤
-                if board[backr][backc] == 1:
-                    return cnt
-                # 이미 청소한 칸이라면 한칸 후진후 2번으로 돌아감
-                else:
-                    r, c = backr, backc
+    global res
     
-res = find(r, c, d)
+    # 현재 좌표를 통해 청소할 수 있는 지 확인
+    if board[r][c] == 0:
+        board[r][c] = 2
+        res += 1
+        
+    directions = [[-1, 0], [0, 1], [1, 0], [0, -1]]
+    for _ in range(4):
+        # 왼쪽 방향으로 회전
+        newd = (d + 3) % 4
+        newr, newc = r + directions[newd][0], c + directions[newd][1] 
+        
+        # 왼쪽 방향으로 회전한 결과가 0이면 다음 좌표와 방향을 탐색
+        if board[newr][newc] == 0:
+            find(newr, newc, newd)
+            return
+        d = newd
+        
+    # 뒤로 이동
+    newd = (d + 2) % 4
+    newr, newc = r + directions[newd][0], c + directions[newd][1]
+    
+    # 뒤가 벽이면 바로 종료
+    if board[newr][newc] == 1:
+        return
+    # 그렇지 않으면 방향을 유지한채로 다음 좌표와 방향 탐색
+    find(newr, newc, d)
 
+
+N, M = map(int, stdin.readline().split())
+r, c, d = map(int, stdin.readline().split())
+board = [list(map(int, stdin.readline().split())) for _ in range(N)]
+
+res = 0
+find(r, c, d)
 print(res)
